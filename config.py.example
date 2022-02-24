@@ -1,0 +1,4 @@
+API_CONFIG = {
+    "APIKEY" : "API KEY HERE",
+    "SECRETKEY" : "API SECRET KEY HERE"
+}
