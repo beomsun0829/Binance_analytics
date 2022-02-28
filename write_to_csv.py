@@ -3,7 +3,6 @@ import json
 
 import os
 import time
-from attr import field
 
 def write_to_csv(rawdata):
     
