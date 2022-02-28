@@ -2,5 +2,5 @@ config.py
 main.py.log
 
 
-__pycache__
+__pycache__/
 *.csv
