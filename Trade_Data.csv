@@ -1,0 +1,3 @@
+Time,Symbol,Side,Order Type,Original Quantity,Original Price,Execution Type,Order Status,Stop Price Working Type,Original Order Type,Position Side
+2022-02-28 13:19:08,ETHUSDT,BUY,LIMIT,0.008,2618,NEW,NEW,CONTRACT_PRICE,LIMIT,LONG
+2022-02-28 13:19:11,ETHUSDT,BUY,LIMIT,0.008,2618,TRADE,FILLED,CONTRACT_PRICE,LIMIT,LONG

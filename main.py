@@ -33,13 +33,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
+from sqlalchemy import JSON
 from unicorn_binance_websocket_api import BinanceWebSocketApiManager
 import logging
 import time
 import threading
 import os
 import config
+from write_to_csv import write_to_csv
+from write_to_csv import check_csv_exists
 
+
+# signal handler for ctrl+c
 import signal
 def sigint_handler(signal, frame):
     print ('KeyboardInterrupt is caught')
@@ -47,13 +52,17 @@ def sigint_handler(signal, frame):
 signal.signal(signal.SIGINT, sigint_handler)
 
 
+# create logger
 logging.getLogger("unicorn_binance_websocket_api")
 logging.basicConfig(level=logging.INFO,
                     filename=os.path.basename(__file__) + '.log',
                     format="{asctime} [{levelname:8}] {process} {thread} {module}: {message}",
                     style="{")
 
+#check csv file exists
+check_csv_exists()
 
+# stream data
 def print_stream_data_from_stream_buffer(binance_websocket_api_manager):
     while True:
         if binance_websocket_api_manager.is_manager_stopping():
@@ -63,9 +72,12 @@ def print_stream_data_from_stream_buffer(binance_websocket_api_manager):
             time.sleep(0.01)
         else:
             print(oldest_stream_data_from_stream_buffer)
+            write_to_csv(oldest_stream_data_from_stream_buffer)
+            
 
 
-# configure api key and secret for binance.com Isolated Margin
+
+# configure api key and secret for binance.com Futures
 api_key = config.API_CONFIG["APIKEY"]
 api_secret = config.API_CONFIG["SECRETKEY"]
 
@@ -81,7 +93,6 @@ print("SYSTEM : Starting worker thread")
 worker_thread.start()
 
 # monitor the streams
-
 while True:
-    ubwa_com_im.print_stream_info(user_stream_id_im)
+    #ubwa_com_im.print_stream_info(user_stream_id_im)
     time.sleep(10)

@@ -1,2 +1,4 @@
 config.py
 main.py.log
+__pycache__
+Trade_Data.csv
