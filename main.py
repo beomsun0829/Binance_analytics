@@ -39,8 +39,10 @@ import time
 import threading
 import os
 import config
-from write_to_csv import write_to_csv
-from write_to_csv import check_csv_exists
+import schedule
+from Trade_Data_socket import Trade_Data_socket
+from Trade_Data_socket import check_csv_exists
+from Get_Daily_PNL import Get_Daily_PNL
 
 
 # signal handler for ctrl+c
@@ -71,7 +73,7 @@ def print_stream_data_from_stream_buffer(binance_websocket_api_manager):
             time.sleep(0.01)
         else:
             print(oldest_stream_data_from_stream_buffer)
-            write_to_csv(oldest_stream_data_from_stream_buffer)
+            Trade_Data_socket(oldest_stream_data_from_stream_buffer)
             
 
 
@@ -91,7 +93,12 @@ worker_thread = threading.Thread(target=print_stream_data_from_stream_buffer, ar
 print("SYSTEM : Starting worker thread")
 worker_thread.start()
 
+
+schedule.every().day.at("00:00").do(Get_Daily_PNL)
+
+
 # monitor the streams
 while True:
+    schedule.run_pending()
     #ubwa_com_im.print_stream_info(user_stream_id_im)
     time.sleep(10)

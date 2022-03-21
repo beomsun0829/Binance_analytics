@@ -4,7 +4,7 @@ import json
 import os
 import time
 
-def write_to_csv(rawdata):
+def Trade_Data_socket(rawdata):
     
     with open("Trade_Data" + '.csv', 'a', newline='') as csv_file:
         
@@ -28,9 +28,6 @@ def write_to_csv(rawdata):
                 ORDER_TRADE_UPDATE_DATA['ot'],
                 ORDER_TRADE_UPDATE_DATA['ps']
                 ])
-            
-            
-            
             
             
 def check_csv_exists():
